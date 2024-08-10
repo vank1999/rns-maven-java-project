@@ -20,8 +20,7 @@ pipeline {
     stages {
         stage('prepare-workspace') {
             steps {
-                git credentialsId: 'git', url: 'https://github.com/vank1999/rns-maven-java-project.git'
-                stash 'Source'
+                git branch: 'main', credentialsId: 'git', url: 'https://github.com/vank1999/rns-maven-java-project.git'
             }
         }
 
