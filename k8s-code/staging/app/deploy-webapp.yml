@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  namespace: staging
+  labels:
+    app: webapp
+spec:
+  containers:
+    - name: webapp
+      image: vank1999/webapp:latest
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8080

@@ -1,0 +1,13 @@
+--- # Upload the Shell Script to Remote Host and Run it.
+- hosts: sonar
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    java_packages:
+      - openjdk-8-jdk
+  roles:
+    - geerlingguy.java
+    - ansible-role-sonarqube
