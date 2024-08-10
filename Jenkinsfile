@@ -52,7 +52,6 @@ pipeline {
       stage('Build Code') {
         
           steps{
-	      unstash 'Source'
               sh "mvn package -DskipTests=true"  
           }
           post{
