@@ -63,16 +63,22 @@ pipeline {
 
           stage('Publish to Nexus') {
             steps {
-                echo "Publishing WAR to Nexus"
-                script {
-                    nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'maven-releases', 
-                        packages: [[$class: 'MavenArtifact', 
-                        artifacts: [[artifactId: 'java-maven',
-                                     classifier: '',
-                                     file: 'target/java-maven-1.0-SNAPSHOT.war',
-                                     type: 'war']],
-                        groupId: 'com.example', version: '1.0-SNAPSHOT']]
-                }
+             nexusArtifactUploader artifacts:
+              [
+                [
+                    artifactId: 'java-maven',
+                     classifier: '',
+                      file: 'target/ java-maven-1.0-SNAPSHOT.war',
+                       type: 'war'
+                       ]
+                       ],
+                        credentialsId: 'nexus-credentials',
+                         groupId: 'com.example',
+                          nexusUrl: '3.91.66.159',
+                           nexusVersion: 'nexus2',
+                            protocol: 'http',
+                             repository: 'java-maven',
+                              version: '1.0-SNAPSHOT'
             }
         }
 
