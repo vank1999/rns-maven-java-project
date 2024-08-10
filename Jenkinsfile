@@ -59,29 +59,8 @@ pipeline {
                   archiveArtifacts '**/*.war'
               }
           }
-      }
-
-          stage('Publish to Nexus') {
-            steps {
-             nexusArtifactUploader artifacts:
-              [
-                [
-                    artifactId: 'java-maven',
-                     classifier: '',
-                      file: 'target/ java-maven-1.0-SNAPSHOT.war',
-                       type: 'war'
-                       ]
-                       ],
-                        credentialsId: 'nexus-credentials',
-                         groupId: 'com.example',
-                          nexusUrl: '3.91.66.159',
-                           nexusVersion: 'nexus2',
-                            protocol: 'http',
-                             repository: 'java-maven',
-                              version: '1.0-SNAPSHOT'
-            }
         }
-
+        
         stage('Build Docker Image') {
          
          steps{
