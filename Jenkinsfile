@@ -27,14 +27,14 @@ pipeline {
         stage('tools-setup') {
             steps {
             echo "Tools Setup"
-            sshCommand remote: ansible, command: 'cd Maven-Java-Project; git pull'
-            sshCommand remote: ansible, command: 'cd Maven-Java-Project; ansible-playbook -i hosts tools/sonarqube/sonar-install.yaml'
-            sshCommand remote: ansible, command: 'cd Maven-Java-Project; ansible-playbook -i hosts tools/docker/docker-install.yml'  
+            sshCommand remote: ansible, command: 'cd rns-maven-java-project; git pull'
+            sshCommand remote: ansible, command: 'cd rns-maven-java-project; ansible-playbook -i hosts tools/sonarqube/sonar-install.yaml'
+            sshCommand remote: ansible, command: 'cd rns-maven-java-project; ansible-playbook -i hosts tools/docker/docker-install.yml'  
             
             //K8s Setup
-           sshCommand remote: kops, command: "cd Maven-Java-Project; git pull"
-	       sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/staging/namespace/staging-ns.yml"
-	       sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/prod/namespace/prod-ns.yml"
+           sshCommand remote: kops, command: "cd rns-maven-java-project; git pull"
+	       sshCommand remote: kops, command: "kubectl apply -f rns-maven-java-project/k8s-code/staging/namespace/staging-ns.yml"
+	       sshCommand remote: kops, command: "kubectl apply -f rns-maven-java-project/k8s-code/prod/namespace/prod-ns.yml"
             }
         }
 
@@ -84,9 +84,9 @@ pipeline {
 	      steps{
 	      //Deploy to K8s Cluster 
               echo "Deploy to Staging Server"
-	      sshCommand remote: kops, command: "cd Maven-Java-Project; git pull"
-	      sshCommand remote: kops, command: "kubectl delete -f Maven-Java-Project/k8s-code/staging/app/deploy-webapp.yml"
-	      sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/staging/app/."
+	      sshCommand remote: kops, command: "cd rns-maven-java-project; git pull"
+	      sshCommand remote: kops, command: "kubectl delete -f rns-maven-java-project/k8s-code/staging/app/deploy-webapp.yml"
+	      sshCommand remote: kops, command: "kubectl apply -f rns-maven-java-project/k8s-code/staging/app/."
 	  }		    
      }
 
@@ -113,9 +113,9 @@ pipeline {
 	  steps{
               echo "Deploy to Production"
 	      //Deploy to Prod K8s Cluster
-	      sshCommand remote: kops, command: "cd Maven-Java-Project; git pull"
-	      sshCommand remote: kops, command: "kubectl delete -f Maven-Java-Project/k8s-code/prod/app/deploy-webapp.yml"
-	      sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/prod/app/."
+	      sshCommand remote: kops, command: "cd rns-maven-java-project; git pull"
+	      sshCommand remote: kops, command: "kubectl delete -f rns-maven-java-project/k8s-code/prod/app/deploy-webapp.yml"
+	      sshCommand remote: kops, command: "kubectl apply -f rns-maven-java-project/k8s-code/prod/app/."
 	 }
 	}
   }
